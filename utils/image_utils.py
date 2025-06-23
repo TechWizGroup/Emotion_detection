@@ -23,6 +23,7 @@ def image_preprocess(image, target_size=(48, 48)):
     """
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert BGR to RGB
+    image = image.astype('float') / 255.0
     image = tf.expand_dims(image, axis=-1)  # thêm trục channels vào cuối
     if image.shape[:2] != target_size:
         image = tf.image.resize(image, target_size)
