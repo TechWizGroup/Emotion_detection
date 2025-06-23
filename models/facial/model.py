@@ -14,7 +14,7 @@ def GPU_set():
     # Kiểm tra GPU
     print("Using GPU:", tf.config.list_physical_devices('GPU'))
 
-class Model:
+class FacialModel:
     def __init__(self):
 
         # Xây dựng mô hình CNN (VGG-style + BN + Dropout)
@@ -81,7 +81,7 @@ class Model:
     def summary(self):
         self.model.summary()
 
-class DataLoader:
+class FacialDataLoader:
     
     def __init__(self, batch_size=128,
                 data_path_train = 'data/fer2013/train',
