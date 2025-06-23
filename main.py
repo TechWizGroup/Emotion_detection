@@ -19,8 +19,7 @@ def facial_recognition():
             x, y, w, h = face
             img = frame[y:y+h, x:x+w]
             result = det.predict(img, None)
-            render.add_bounding_box(frame, (x, y, w, h), color=(0, 255, 0), thickness=2)
-            render.add_label(frame, result, position=(x, y-10))
+            render.render_results(frame, face, result)
 
         if not render.render_frame(frame):
             break
