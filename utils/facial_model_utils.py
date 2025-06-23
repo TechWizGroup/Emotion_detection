@@ -16,7 +16,7 @@ def train_facial_model():
     # Huấn luyện mô hình
     facial_model.fit(train_dataset, test_dataset)
     # Lưu mô hình
-    facial_model.save('models/facial/model.h5')
+    facial_model.save('models/facial/model.weights.h5')
     print("Mô hình đã được huấn luyện và lưu thành công.")
     
 def evaluate_facial_model():

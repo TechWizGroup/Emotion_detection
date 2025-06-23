@@ -15,7 +15,7 @@ def GPU_set():
     print("Using GPU:", tf.config.list_physical_devices('GPU'))
 
 class FacialModel:
-    def __init__(self):
+    def __init__(self, pre_train=True, model_path='pretrain/facial_model.weights.h5'):
 
         # Xây dựng mô hình CNN (VGG-style + BN + Dropout)
         self.model = Sequential([
@@ -49,11 +49,16 @@ class FacialModel:
             Dense(7, activation='softmax', dtype='float32')  # float32 vì softmax
         ])
 
-        # Biên dịch
-        self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+        if pre_train:
+            # Nạp mô hình đã huấn luyện nếu không cần huấn luyện lại
+            self.model.load_weights(model_path)
+            print("Mô hình đã được nạp từ:", model_path)
+        
 
     def fit(self, train_dataset, test_dataset, best_model_path='best_model.h5'):
 
+        # Biên dịch
+        self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
         # Thiết lập các callback
         callbacks = [
             ModelCheckpoint(best_model_path, save_best_only=True, monitor='val_accuracy', mode='max'),
@@ -70,13 +75,23 @@ class FacialModel:
 
 
     def save(self, model_path):
-        self.model.save(model_path)
+        self.model.save_weight(model_path)
         print("Mô hình đã được lưu tại:", model_path)
     
     def evaluate(self, test_dataset):
         results = self.model.evaluate(test_dataset)
         print("Đánh giá mô hình:", results)
         return results
+    
+    def predict(self, image):
+        """
+        Dự đoán cảm xúc từ ảnh đầu vào.
+        
+        :param image: Ảnh đầu vào đã được tiền xử lý.
+        :return: Kết quả dự đoán từ mô hình.
+        """
+        prediction = self.model.predict(image, verbose=0)
+        return prediction
     
     def summary(self):
         self.model.summary()

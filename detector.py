@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras.models import load_model
+from models.facial.model import FacialModel
 from utils.image_utils import *
 import os
 
@@ -17,9 +17,9 @@ class Detector:
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model path '{model_path}' does not exist.")
 
-        self.facial_model = load_model(model_path+"facial_model.h5") if facial_mode else None
-        self.speech_model = load_model(model_path+"speech_model.h5") if speech_mode else None
-        self.context_model = load_model(model_path+"context_model.h5") if context_mode else None
+        self.facial_model = FacialModel() if facial_mode else None
+        # self.speech_model = load_model(model_path+"speech_model.h5") if speech_mode else None
+        # self.context_model = load_model(model_path+"context_model.h5") if context_mode else None
         self.facial_mode = facial_mode
         self.speech_mode = speech_mode
         self.context_mode = context_mode
@@ -67,7 +67,7 @@ class Detector:
         if image is None:
             raise ValueError("Image preprocessing failed.")
         
-        result = self.facial_model.predict(image, verbose=0)
+        result = self.facial_model.predict(image)
 
         label = postpredict(result)
         if label is None or label == "Unknown":
