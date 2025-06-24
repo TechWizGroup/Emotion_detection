@@ -97,7 +97,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # Callbacks thông minh
 callbacks = [
     ModelCheckpoint(best_model_path, save_best_only=True, monitor='val_accuracy', mode='max'),
-    EarlyStopping(patience=7, monitor='val_loss', restore_best_weights=True),
+    EarlyStopping(patience=50, monitor='val_loss', restore_best_weights=True),
     ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3)
 ]
 
