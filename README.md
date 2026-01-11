@@ -29,5 +29,10 @@ The emotion detection uses a CNN model trained on the FER2013 dataset, recognizi
 ![Accuracy](image/accuracy_plot.png)
 ![Confusion](image/confusion_matrix.png)
 
+## Contributors
+- Pham Quang Hieu
+- Thai Trung Hieu
+- Nguyen Thien Hao
+
 ## Update
 - Version 1.0: Add facial model
